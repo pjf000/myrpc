@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:rpc.properties"/>
+
+    <bean id="helloServiceDiscovery" class="com.xxx.rpc.registry.ServiceDiscovery">
+        <constructor-arg name="registryAddress" value="${registry.address}"/>
+        <constructor-arg name="intf" value="com.xxx.rpc.sample.api.HelloService"/>
+    </bean>
+
+    <bean id="helloServiceProxy" class="com.xxx.rpc.client.RpcProxy">
+        <constructor-arg name="serviceDiscovery" ref="helloServiceDiscovery"/>
+    </bean>
+
+    <bean id="userServiceDiscovery" class="com.xxx.rpc.registry.ServiceDiscovery">
+        <constructor-arg name="registryAddress" value="${registry.address}"/>
+        <constructor-arg name="intf" value="com.xxx.rpc.sample.api.UserService"/>
+    </bean>
+
+    <bean id="userServiceProxy" class="com.xxx.rpc.client.RpcProxy">
+        <constructor-arg name="serviceDiscovery" ref="userServiceDiscovery"/>
+    </bean>
+
+</beans>
